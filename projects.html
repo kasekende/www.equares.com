@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Projects - EQUARES GROUP</title>
+    <img src="images/Logo 1.jpg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #4CAF50;
+            --light-green: #81C784;
+            --dark-green: #2E7D32;
+            --primary-blue: #2196F3;
+            --dark-blue: #1565C0;
+            --black: #1a1a1a;
+            --white: #ffffff;
+            --gray: #757575;
+            --light-gray: #f5f5f5;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--black);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-green);
+            letter-spacing: 1px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--black);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-green);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after,
+        .nav-menu a.active::after {
+            width: 100%;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: var(--primary-green);
+        }
+
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .mobile-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--black);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .mobile-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+            color: var(--white);
+            padding: 8rem 0 4rem;
+            text-align: center;
+            margin-top: 70px;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .page-header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Filter Section */
+        .projects-filter {
+            padding: 2rem 0;
+            background: var(--white);
+            position: sticky;
+            top: 70px;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.7rem 1.5rem;
+            background: var(--light-gray);
+            border: 2px solid transparent;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: var(--black);
+            font-size: 0.95rem;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--primary-green);
+            color: var(--white);
+            border-color: var(--dark-green);
+            transform: translateY(-2px);
+        }
+
+        /* Projects Section */
+        .projects-section {
+            padding: 4rem 0;
+            background: var(--light-gray);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .project-card.hidden {
+            display: none;
+        }
+
+        .project-image {
+            position: relative;
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+        }
+
+        .project-placeholder {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+
+        .project-status {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .project-status.ongoing {
+            background: var(--primary-green);
+        }
+
+        .project-status.completed {
+            background: var(--primary-blue);
+        }
+
+        .project-status.upcoming {
+            background: var(--gray);
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--black);
+        }
+
+        .project-content p {
+            color: var(--gray);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .project-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: 0.3rem 0.8rem;
+            background: var(--light-gray);
+            border-radius: 15px;
+            font-size: 0.85rem;
+            color: var(--primary-blue);
+        }
+
+        /* Impact Section */
+        .impact-section {
+            padding: 5rem 0;
+            background: var(--white);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--black);
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .impact-card {
+            text-align: center;
+            padding: 2rem;
+            background: var(--light-gray);
+            border-radius: 15px;
+        }
+
+        .impact-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .impact-label {
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 5rem 0;
+            background: var(--black);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-green);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--dark-green);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--black);
+            color: var(--white);
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-col h4 {
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-col a {
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-col a:hover {
+            color: var(--primary-green);
+        }
+
+        .social-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background-color: var(--white);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 27px rgba(0,0,0,0.05);
+                padding: 2rem 0;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .page-header p {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .filter-buttons {
+                gap: 0.5rem;
+            }
+
+            .filter-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.85rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .impact-number {
+                font-size: 2rem;
+            }
+        }
+        container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      padding: 50px 10%;
+      box-shadow: #006400;
+    }
+    .contact-info, .contact-form {
+      color: white;
+      flex: 1 1 45%;
+      background-color: rgb(3, 5, 5);
+      padding: 30px;
+      box-shadow: 0 70px 12px rgba(0, 0, 0, 0.05);
+      border-radius: 12px;
+      margin-bottom: 30px;
+      margin-right: 100px;
+    }
+    .contact-info h2, .contact-form h2 {
+      color: #ffffff;
+      font-size: 1.8em;
+      margin-bottom: 15px;
+    }
+    .contact-info p {
+      line-height: 1.7;
+      font-size: 1.05em;
+    }
+    .contact-form form {
+      display: flex;
+      flex-direction: column;
+      margin-right: 100px;
+    }
+    .contact-form input, .contact-form textarea {
+      margin-bottom: 15px;
+      padding: 12px;
+      border: 1px solid #531c1c;
+      border-radius: 8px;
+      font-size: 1em;
+      height: 20px;
+    }
+    .contact-form button {
+      background-color: #006400;
+      color: rgb(85, 163, 226);
+      border: none;
+      padding: 12px;
+      font-size: 1.1em;
+      border-radius: 20px;
+      cursor: all-scroll;
+      transition: background 0.3s;
+    }
+    .contact-form button:hover {
+      background-color: #030505;
+      }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="logo">EQUARES GROUP</div>
+                <button class="mobile-toggle" id="mobileToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="projects.html" class="active">Projects</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Our Projects</h1>
+            <p>Transforming lives through youth Empowerment</p>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="projects-filter">
+        <div class="container">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All Projects</button>
+                <button class="filter-btn" data-filter="education">Live Band performance</button>
+                <button class="filter-btn" data-filter="technology">Car cleaning</button>
+                <button class="filter-btn" data-filter="community">Growsery delivery</button>
+                
+            
+        </div>
+    </section>
+
+    <!-- Projects Grid -->
+    <section class="projects-section">
+        <div class="container">
+            <div class="projects-grid" id="projectsGrid">
+                <!-- Project 1 -->
+                <div class="project-card" data-category="education">
+                    <div class="project-image">
+                        <div class="project-placeholder"><img src="images/jazz 1.jpg" width="200px" height="200px"></div>
+                        <div class="project-status ongoing"></div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Live band Entertainment</h3>
+                        <p>We offer live band entertainment at defferent ceremonies such as;<br>1.Wedding parties<br>2.Graduation parties<br>3.Thanks giving<br>4.Introduction Ceremonies<br>5.Birthday parties<br>6.Henoymoon parties<br>7.Baby Shawa.</p>
+                        <div class="project-meta">
+                            <span class="meta-item"></span>
+                            <span class="meta-item"></span>
+                        </div>
+                        <div class="project-tags">
+                            <span class="tag"></span>
+                            <span class="tag"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card" data-category="technology">
+                    <div class="project-image">
+                        <div class="project-placeholder"><img src="images/wash 1.jpg" width="200px" height="200px"></div>
+                        <div class="project-status ongoing"></div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Car wash and Cleaning</h3>
+                        <p>we are also skilled at keeping your car clean and making it comfortable for you all day.<br>We can clean it from your home or from our cleaning center.</p>
+                        <div class="project-meta">
+                            <span class="meta-item"></span>
+                            <span class="meta-item"></span>
+                        </div>
+                        <div class="project-tags">
+                            <span class="tag"></span>
+                            <span class="tag"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card" data-category="community">
+                    <div class="project-image">
+                        <div class="project-placeholder"><img src="images/grocery 1.jpg" width="200px" height="200px"></div>
+                        <div class="project-status completed"></div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Grocery Delivery</h3>
+                        <p>We offer a delivery service of  well packaged Groceries you need at your home,school and your place of work.These include;<br>1.tomatoes<br>2.Onions<br>3.Green paper<br>4.passion fuirts<br>5.Cabbeages <br>and many others.</p>
+                        <div class="project-meta">
+                            <div class="contact-form-wrapper">
+                                
+                                           
+                                    
+                            </div>
+                            <span class="meta-item"></span>
+                            <span class="meta-item"></span>
+                        </div>
+                        <div class="project-tags">
+                            <span class="tag"></span>
+                            <span class="tag"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="project-card" data-category="education">
+                    <div class="project-image">
+                        <div class="project-placeholder"><img src="images/Cabbage 1.jpg" width="200px" height="200px"></div>
+                        <div class="project-status ongoing"></div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Farm project</h3>
+                        <p>We carry out farming and we grow defferent types of crops which we deliver to our customers.</p>
+                        <div class="project-meta">
+                            <span class="meta-item"></span>
+                            <span class="meta-item"></span>
+                        </div>
+                        <div class="project-tags">
+                            <span class="tag"></span>
+                            <span class="tag"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+            
+                
+
+                <!-- Project 6 -->
+                <div class="project-card" data-category="technology">
+                    <div class="project-image">
+                        <div class="project-placeholder"><img src="images/wash 2.jpg" width="200px" height="200px"></div>
+                        <img src="images/wash 3.jpg" width="400px" height="400px">
+                        <div class="project-status upcoming"></div>
+                    </div>
+                    <div class="project-content">
+                        <h3></h3>
+                        <p></p>
+                        <div class="project-meta">
+                            <span class="meta-item"></span>
+                            <span class="meta-item"></span>
+                        </div>
+                        <div class="project-tags">
+                            <span class="tag"></span>
+                            <span class="tag"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 7 -->
+                <div class="project-card" data-category="education">
+                    <div class="project-image">
+                        <div class="project-placeholder"><img src="images/Saxphone 1.jpg" width="200px" height="200px"></div>
+                        <img src="images/Giter 1.jpg" width="300px" height="300px">
+                        <div class="project-status completed"></div>
+                    </div>
+                    <div class="project-content">
+                        <h3></h3>
+                        <p></p>
+                        <div class="project-meta">
+                            <span class="meta-item"></span>
+                            <span class="meta-item"></span>
+                        </div>
+                        <div class="project-tags">
+                            <span class="tag"></span>
+                            <span class="tag"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 8 -->
+                <div class="project-card" data-category="community">
+                    <div class="project-image">
+                        <div class="project-placeholder"> <img src="images/grocery 2.jpg" width="200px" height="200px"></div>
+                        <div class="project-status ongoing"></div>
+                    </div>
+                    <div class="project-content">
+                        <img src="images/gw 1.jpeg" width="300px" height="200px">
+                        <p></p>
+                        <div class="project-meta">
+                            <span class="meta-item"></span>
+                            <span class="meta-item"></span>
+                        </div>
+                        <div class="project-tags">
+                            <span class="tag"></span>
+                            <span class="tag"></span>
+                        </div>
+    </section>
+<div class="contact-form">
+      <h2>Order Now</h2>
+      <form>
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <textarea rows="5" placeholder="Your Message/Order" required></textarea>
+        <button type="submit">Send Message</button>
+        <div class="form-group">
+                                        <label for="message">package </label> </div>
+                                        
+                    
+                                    <button type="submit" class="btn btn-primary" id="submitBtn">Send Message</button>
+                                    <div class="form-message" id="formMessage"></div>
+                                
+      </form>
+    </div>
+    
+    
+                                    <div class="form-group">
+                                        <label for="subject"> </label>
+                                        <select id="subject" name="subject" required>
+                                            <option value=""></option>
+                                            <option value="general"></option>
+                                            <option value="volunteer"></option>
+                                            <option value="partnership"></option>
+                                            <option value="programs"></option>
+                                            <option value="donation"></option>
+                                             <option value="other"></option>
+                                        </select>
+                                    </div>
+                                    
+
+    <!-- Impact Section -->
+    <section class="impact-section">
+        <div class="container">
+            <h2 class="section-title">Project Impact</h2>
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <div class="impact-number">1,200+</div>
+                    <div class="impact-label">Youth Impacted</div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-number">25+</div>
+                    <div class="impact-label">Active Projects</div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-number">50+</div>
+                    <div class="impact-label">Partners</div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-number">15+</div>
+                    <div class="impact-label">Communities</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Want to Support Our Projects?</h2>
+            <p></p>
+            <a href="contact.html" class="btn btn-primary">Get Involved</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>EQUARES GROUP</h4>
+                    <p>Empowering youth through education, innovation, and community development.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="projects.html">Projects</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Connect</h4>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook">Facebook</a>
+                        <a href="#" aria-label="Twitter">Twitter</a>
+                        <a href="#" aria-label="Instagram">Instagram</a>
+                        <a href="#" aria-label="LinkedIn">LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 EQUARES GROUP. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileToggle = document.getElementById('mobileToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        mobileToggle.addEventListener('click', function() {
+            this.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a link
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Project Filter Functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                button.classList.add('active');
+
+                const filterValue = button.getAttribute('data-filter');
+
+                projectCards.forEach(card => {
+                    if (filterValue === 'all') {
+                        card.classList.remove('hidden');
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'scale(1)';
+                        }, 10);
+                    } else {
+                        const cardCategory = card.getAttribute('data-category');
+                        if (cardCategory === filterValue) {
+                            card.classList.remove('hidden');
+                            setTimeout(() => {
+                                card.style.opacity = '1';
+                                card.style.transform = 'scale(1)';
+                            }, 10);
+                        } else {
+                            card.style.opacity = '0';
+                            card.style.transform = 'scale(0.8)';
+                            setTimeout(() => {
+                                card.classList.add('hidden');
+                            }, 300);
+                        }
+                    }
+                });
+            });
+        });
+
+        // Add transition styles to cards
+        projectCards.forEach(card => {
+            card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        });
+
+        // Navbar scroll effect
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 100) {
+                navbar.style.boxShadow = '0 4px 20px rgba(0,0,0,0.15)';
+            } else {
+                navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            }
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
